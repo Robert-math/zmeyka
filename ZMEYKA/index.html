@@ -1,0 +1,122 @@
+<!DOCTYPE html>
+<html>
+    <head>
+        <title>zmeyka</title>
+    </head>
+    <body>
+        <div style="background-color:darkgray;" width="1600px" height="900px">
+            <canvas id="c1" width="1600px" height="900px" ></canvas>
+            
+        </div>
+
+
+
+
+
+        <script>
+            // 1-verev 2- aj 3 - nerqev 4- dzax
+
+            let arr = [];
+            let pi  = Math.PI;
+            let dir = 1;
+            let aiminfo = [];
+            let  canvas = document.getElementById('c1');
+            let ctx = canvas.getContext('2d');
+
+            for(let i = 0;i<=2;i++){
+                arr[i] = new Array(2);
+            }
+            arr[0][0] = 800;
+            arr[0][1] = 440;
+            arr[1][0] = 800;
+            arr[1][1] = 450;
+            arr[2][0] = 800;
+            arr[2][1] = 460;
+
+            ctx.fillRect(arr[0][0],arr[0][1],8,8);
+            ctx.fillRect(arr[1][0],arr[1][1],8,8);
+            ctx.fillRect(arr[2][0],arr[2][1],8,8);
+            aiminfo = randround();
+            
+            function movement(){
+                ctx.fillStyle = "black";
+                let x = arr[0][0];
+                let y  = arr[0][1];
+                if(x+4<=aiminfo[0]+8 && x+4 >=aiminfo[0]-8 && y+4 <=aiminfo[1]+8 && y+4 >=aiminfo[1]-8){
+                    aiminfo = randround(); 
+                    ctx.clearArc(aiminfo[0],aiminfo[1],8,0,2*pi,true);
+                }
+                if(dir == 1){
+                    arr.unshift(1);
+                    arr[0] = [x ,y-10];
+                    ctx.clearRect(arr[arr.length-1][0],arr[arr.length-1][1],8,8);
+                    ctx.fillRect(arr[0][0],arr[0][1],8,8);
+                    arr.pop();
+                
+                }else if(dir == 2 ){
+                    arr.unshift(1);
+                    arr[0] = [x+10 ,y];
+                    ctx.clearRect(arr[arr.length-1][0],arr[arr.length-1][1],8,8);
+                    ctx.fillRect(arr[0][0],arr[0][1],8,8);
+                    arr.pop();
+                }else if(dir == 3 ){
+                    arr.unshift(1);
+                    arr[0] = [x ,y+10];
+                    ctx.clearRect(arr[arr.length-1][0],arr[arr.length-1][1],8,8);
+                    ctx.fillRect(arr[0][0],arr[0][1],8,8);
+                    arr.pop();
+                   
+                }else if(dir == 4 ){
+                    arr.unshift(1);
+                    arr[0] = [x-10,y];
+                    ctx.clearRect(arr[arr.length-1][0],arr[arr.length-1][1],8,8);
+                    ctx.fillRect(arr[0][0],arr[0][1],8,8);
+                    arr.pop();
+                }
+            }
+            setInterval(movement,300);
+            function randround (){
+                
+                let x  = Math.floor(Math.random() * 1501);
+                let y = Math.floor(Math.random() * 801);
+                let roundKor = [];
+                roundKor[0] = x;
+                roundKor[1] = y;
+                ctx.fillStyle = "red";
+                ctx.beginPath();
+                ctx.arc(x,y,8,0,2*pi,true);
+                ctx.fill();
+                ctx.fillStyle = "black";
+                return roundKor;
+            }
+          
+          
+          
+          
+          
+          
+ document.addEventListener('keydown', function (event) {
+    if (event.key === 'w' && dir != 3) {
+        
+        dir = 1;
+        movement();
+        
+    }else if(event.key === 'd' && dir !=4) {
+      dir = 2;
+      movement();
+      
+    }else if(event.key === 's' && dir !=1){
+        dir = 3;
+        movement();
+        
+    }else if(event.key === 'a' && dir!=2){
+        dir = 4;
+        movement();
+      
+    }
+});
+        </script>
+
+    </body>
+</html>
+
